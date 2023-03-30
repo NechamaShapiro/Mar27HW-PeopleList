@@ -41,7 +41,7 @@
                 input.attr('name', `people[${counter}].${attrName}`);
             });
             counter++;
-            num = counter;
+            num = counter - 1;
         });
     })
 
