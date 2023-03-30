@@ -1,5 +1,5 @@
 ﻿$(() => {
-    const peopleId = [];
+    //const peopleId = [];
     let num = 0;
     $("#add-rows").on('click', function () {
         console.log("add row");
@@ -7,8 +7,8 @@
     });
     let AddRow = function () {
         num++;
-        peopleId.push(num);
-        return `<div class="row person-row-${num}" style="margin-bottom: 10px;">
+        //peopleId.push(num);
+        return `<div class="row person-row" style="margin-bottom: 10px;">
                 <div class="col-md-3">
                     <input class="form-control" type="text" name="people[${num}].firstname" placeholder="First Name" />
                 </div>
@@ -23,10 +23,26 @@
                 </div>
             </div>`
     }
-    //NOT FINISHED DELETE BUTTON YET
-    //$("#ppl-rows").on('click', '.delete-row', function () {
-    //    console.log("delete row");
-    //    let deleteId = $(".delete-row").attr("id");
-    //    $(`.person-row-${deleteId}`).remove();
-    //});
+    $("#ppl-rows").on('click', ".delete-row", function () {
+        console.log("delete row");
+        const button = $(this);
+        const row = button.closest(".row");
+        row.remove();
+
+        let counter = 0;
+        $(".person-row").each(function () {
+            const row = $(this);
+            const inputs = row.find("input");
+            inputs.each(function () {
+                const input = $(this);
+                const name = input.attr('name');
+                const indexOfDot = name.indexOd('.');
+                const attrName = name.substring(indexOfDot + 1);
+                input.attr('name', `people[${counter}].${attrName}`);
+            });
+            counter++;
+            num = counter;
+        });
+    });
+    
 })

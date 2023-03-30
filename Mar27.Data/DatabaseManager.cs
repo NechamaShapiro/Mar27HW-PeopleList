@@ -31,23 +31,20 @@ namespace Mar27.Data
             connection.Close();
             return people;
         }
-        public void AddPerson(Person person)
+        public void AddPeople(List<Person> people)
         {
             using var connection = new SqlConnection(_connectionString);
             using var cmd = connection.CreateCommand();
             cmd.CommandText = "INSERT INTO People " +
                 "VALUES (@firstName, @lastName, @age) ";
-            cmd.Parameters.AddWithValue("@firstName", person.FirstName);
-            cmd.Parameters.AddWithValue("@lastName", person.LastName);
-            cmd.Parameters.AddWithValue("@age", person.Age);
             connection.Open();
-            cmd.ExecuteNonQuery();
-        }
-        public void AddPeople(List<Person> people)
-        {
-            foreach(Person p in people)
+            foreach (Person p in people)
             {
-                AddPerson(p);
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@firstName", p.FirstName);
+                cmd.Parameters.AddWithValue("@lastName", p.LastName);
+                cmd.Parameters.AddWithValue("@age", p.Age);
+                cmd.ExecuteNonQuery();
             }
         }
     }
