@@ -26,23 +26,23 @@
     $("#ppl-rows").on('click', ".delete-row", function () {
         console.log("delete row");
         const button = $(this);
-        const row = button.closest(".row");
+        const row = button.closest('.row');
         row.remove();
 
         let counter = 0;
         $(".person-row").each(function () {
             const row = $(this);
-            const inputs = row.find("input");
+            const inputs = row.find('input');
             inputs.each(function () {
                 const input = $(this);
                 const name = input.attr('name');
-                const indexOfDot = name.indexOd('.');
+                const indexOfDot = name.indexOf('.');
                 const attrName = name.substring(indexOfDot + 1);
                 input.attr('name', `people[${counter}].${attrName}`);
             });
             counter++;
             num = counter;
         });
-    });
-    
-})
+    })
+
+});
